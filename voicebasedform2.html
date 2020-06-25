@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<head>
+    
+    <!--Speech Recognition API -->
+    <script>
+        function startDictation(x) {
+            if (window.hasOwnProperty('webkitSpeechRecognition')) {
+                var recognition = new webkitSpeechRecognition();
+                recognition.continuous = false;
+                recognition.interimResults = false;
+
+                recognition.lang = "en-US";
+                recognition.start();
+
+                recognition.onresult = function(e) {
+                    
+                    if (x=="phone" || x=="aadhar" || x=="bankno" || x=="ifsc") {
+                        document.getElementById(x).value = parseInt(e.results[0][0].transcript);
+                        recognition.stop();
+                        document.getElementById('labnol').submit();
+                    }
+                    
+                    else {
+                        document.getElementById(x).value = e.results[0][0].transcript;
+                        recognition.stop();
+                        document.getElementById('labnol').submit();
+                    }
+                };
+            recognition.onerror = function(e) {
+                message.textContent = "error occured in recognition: " +e.console.error();
+                recognition.stop();
+                }
+            }
+        }
+    </script>
+    <!-- CSS styles -->
+    <style type="text/css" media="all">
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            margin: 0;
+            padding: 0;
+            
+            background-image: radial-gradient(#e66465, #9198e5);
+        }
+        
+        
+        .speech {
+            border: 1px solid #dddddd; 
+            width: 300px;
+            padding: 0;
+            margin: 0;
+        }
+        .speech input {
+            border: 0;
+            width: 240px;
+            display: inline-block;
+            height: 30px;
+        }
+        .speech img {
+            float: right; 
+            width: 20px;
+            
+        }
+        button {
+            display: inline-block;
+            padding: 1em 2em;
+            text-decoration: none;
+            border-radius: 25px;
+            float: none;
+            position: relative;
+            text-align: center;
+            overflow: hidden;
+            cursor: pointer;
+            color: rgb(242, 241, 252);
+            text-transform: uppercase;
+            background-image: -webkit-linear-gradient(45deg, #3a9efc 0%, #0f71f0 100%);
+            background-image: linear-gradient(45deg, #1161c9 0%, #095d85 100%);
+            box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.29);
+            border-bottom: solid 3px #686ac5;            
+        }
+        button:active {
+            -ms-transform: translateY(4px);
+            -webkit-transform: translateY(4px);
+            transform: translateY(4px);
+            box-shadow: 0px 0px 1px rgba(0, 0, 0, 0.2);
+            border-bottom: none;
+        }
+        form label {
+            display: block;
+            margin: 10px 0px;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            font-size: large;
+            color: aliceblue;
+            font-weight: 100 ;
+            font-style: initial;
+        }
+        form input[type="text"], input[type="textarea"] {
+            display:block;
+            padding: 10px 0px;
+            margin: 15px 0;
+           
+            width: 25%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #ffffff;
+            background: transparent;
+            outline: none;
+        }
+        form img {
+            border-radius: 5%;
+        }
+        .reg {
+            text-align: center;
+            text-decoration: double;
+            text-transform: uppercase;
+            color:rgb(242, 241, 252);
+        }
+        input::placeholder {
+            color: whitesmoke;
+            margin: 50px;
+        }
+        .text {
+            color:rgb(242, 241, 252);
+        }
+        form select {
+            background: transparent;
+        }
+        
+        
+        
+    </style>
+</head>
+<body>
+<div class="overlay">
+    <div class="wrap">
+    <div class="reg"> <h1>Programme Registration form</h1> <br><br></div>
+    
+     <div class="container">
+    <div style ="padding-left: 450px">
+    <form id="myForm" method="post" name="theform" style="black" onsubmit="return validateform()">
+    <div class="form-group">
+        <label for="serialNo">Serial No.: </label>
+        <select class="form-control" style="width: 50%" id="serialNo">
+        <option>1</option>
+        <option>2</option>
+        <option>3</option>
+        <option>4</option>
+        <option>5</option>
+        <option>6</option>
+        <option>7</option>
+        <option>8</option>
+        <option>9</option>
+        <option>10</option>
+        <option>11</option>
+        <option>12</option>
+        <option>13</option>
+    </select>
+    </div>
+    <br>
+    <!-- name -->
+    <div class="form-group">
+        <label for="name">Name: </label>
+        <input type="text" class="form-control" style= "width: 50%" id="name" placeholder="    enter name">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('name')"> 
+    </div>
+    <br>
+    <!-- father's name -->
+
+    <div class="form-group">
+        <label for="fathername">Father's name: </label>
+        <input type="text" class="form-control" style= "width: 50%" id="fathername" placeholder="     enter father's name">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('fathername')"> 
+    </div>
+    <br>
+    <!--department -->
+
+    <div class="form-group">
+        <label for="department">Department: </label>
+        <input type="text" class="form-control" style= "width: 50%" id="department" placeholder="     enter department">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('department')"> 
+    </div>
+    <br>
+    <!--designation-->
+
+    <div class="form-group">
+        <label for="designation">Designation: </label>
+        <input type="text" class="form-control" style= "width: 50%" id="designation" placeholder="    enter designation">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('designation')"> 
+    </div>
+    <br>
+    <!-- local address -->
+    <div  class="form-group">
+        <label for="localaddress">Local Address: </label>
+        <input type="text" class="form-control" style= "width: 50%" id="designation" placeholder="    enter local address">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('localaddress')">
+    </div>
+    <br>
+
+    <!-- permenant address -->
+    <div  class="form-group">
+        <label for="permaddress">Permenant Address: </label>
+        <input type="text" class="form-control" style= "width: 50%" id="designation" placeholder="    enter permanent address">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('permaddress')">
+    </div>
+    <br>
+
+    <!-- dob -->
+    <div  class="form-group">
+        <label class="control-label" for="dob">Date of Birth: </label>
+        <input class="form-control" id="dob" style= "width: 50%" placeholder="    month-date-year" type="text" />
+        <img src="mike3.jpg" width="20px" onclick="startDictation('dob')">
+    </div>
+    <br>
+
+    <!-- doj -->
+    <div  class="form-group">
+        <label class="control-label" for="doj">Date of Joining: </label>
+        <input class="form-control" id="doj" style= "width: 50%" placeholder="   month-date-year" type="text" />
+        <img src="mike3.jpg" width="20px" onclick="startDictation('doj')">
+    </div>
+    <br>
+
+    <!-- phone number -->
+    <div class="form-group">
+        <label for="phone">Phone no.: </label>
+        <input type="text" class="form-control" id="phone" style="width: 50%" placeholder="    Enter contact" >
+        <img src="mike3.jpg" width="20px" onclick="startDictation('phone')">
+    </div>
+    <br>
+
+    <!-- aadhar no -->
+    <div class="form-group">
+        <label for="aadhar">Aadhar no.: </label>
+        <input type="text" class="form-control" id="aadhar" style="width: 50%" placeholder="    Enter aadhar" >
+        <img src="mike3.jpg" width="20px" onclick="startDictation('aadhar')">
+    </div>
+    <br>
+
+    <!-- bank account no -->
+    <div class="form-group">
+        <label for="bankno">Bank Account: </label>
+        <input type="text" class="form-control" id="bankno" style="width: 50%" placeholder="    Enter bank account number">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('bankno')">
+    </div>
+    <br>
+
+    <!-- IFSC code -->
+    <div class="form-group">
+        <label for="ifsc">IFSC Code: </label>
+        <input type="text" class="form-control" id="ifsc" style="width: 50%" placeholder="    Enter IFSC">
+        <img src="mike3.jpg" width="20px" onclick="startDictation('ifsc')">
+    </div>
+    <br>
+    <!-- recheck -->
+    
+    <div class="form-check">
+        <span class="text" font-family="Lucida sans">All details are correct</span>
+        <span><input type="checkbox" class="form-check-input" id="check1" value="1" onclick='deRequire("form-form-check-input")'></span>
+    </div>
+    
+    <br><br>
+
+    
+
+    <!-- submit -->
+    <button type="submit" class="btn btn-primary" id="btsubmit" onclick="alert('Your form has been submited successfully')">Submit</button>
+</div>
+</div>
+</div>
+
+</form>
+</div>
+</body>
+</html>
